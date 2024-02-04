@@ -1,24 +1,25 @@
 
 
-
-<mat-card class="container-card">
-    <mat-card-content cols="1" class="container-card-inputs">
-        <mat-grid-list cols="2" class="form-login">
-            <h1>Iniciar sesion</h1>
-            <mat-grid-list cols="1" class="inputs-login">
-                <mat-form-field cols="1">
+<main class="container-main">
+    <mat-card class="container-card">
+        <h1 class="title">Iniciar sesion</h1>
+            <form class="example-form">
+                <mat-form-field class="inputs">
                     <mat-label>Ingresar usuario</mat-label>
                     <input matInput>
                 </mat-form-field>
-            
-                <mat-form-field cols="1">
+                    
+                <mat-form-field class="inputs">
                     <mat-label>Ingresar contraseña</mat-label>
                     <input matInput [type]="hide ? 'password' : 'text'">
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
-            </mat-grid-list>
-        </mat-grid-list>
-    </mat-card-content>
-</mat-card>
+
+                <button class="button-login" mat-flat-button color="primary">
+                    Ingresar
+                </button>
+            </form>
+    </mat-card>
+</main>
