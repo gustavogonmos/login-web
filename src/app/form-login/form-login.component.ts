@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {BreakpointObserver, Breakpoints, LayoutModule} from '@angular/cdk/layout';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-form-login',
@@ -8,25 +9,41 @@ import {BreakpointObserver, Breakpoints, LayoutModule} from '@angular/cdk/layout
 })
 export class FormLoginComponent {
   hide = true;
+  contactForm!: FormGroup;
+  user: any[] = [];
 
-  public colSize = 2;
-  public isMobile: boolean = false;
+  constructor(
+    private apiService: ApiService,
+    readonly fb: FormBuilder
+  ) { }
 
-  constructor(breakpointObserver: BreakpointObserver) {
-    breakpointObserver.observe([
-      Breakpoints.HandsetLandscape
-    ]).subscribe(result => {
-      this.isMobile = result.matches;
-      if(this.isMobile) {
-        this.colSize = 1;
-      } else {
-        this.colSize = 2;
-      }
-    })
+  ngOnInit(): void {
+    this.contactForm = this.initForm();
+    this.onSetValue();
+    this.guardarDatos();
   }
 
-  login() {
-    alert('Bienvenido!');
+
+  onSetValue(): void {
+    this.contactForm.setValue({name: '' , password: ''});
+  }
+
+  guardarDatos(): void {
+    this.apiService.saveData(this.contactForm.value).subscribe( resp => {
+      this.contactForm.reset();
+      this.user = this.user.filter(user => resp.id !== user.id);
+      this.user.push(resp);
+      console.log(resp)
+    },
+      error => {console.log(error)}
+      )
+  }
+
+  initForm(): FormGroup {
+    return this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required]]
+    })
   }
 
 

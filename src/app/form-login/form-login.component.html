@@ -1,27 +1,30 @@
 
 
 <main class="container-main">
-    <mat-grid-list [cols]="colSize" rowHeight="500px">
+    <mat-grid-list [cols]="2" rowHeight="500px">
         <mat-grid-tile
         [colspan]="1"
         [rowspan]="1">
             <mat-card class="container-card">
                 <h1 class="title">Iniciar sesion</h1>
-                <form class="example-form">
+                <form class="example-form" (ngSubmit)="guardarDatos()" [formGroup]="contactForm">
                     <mat-form-field class="inputs1">
                         <mat-label>Ingresar usuario</mat-label>
-                        <input matInput>
+                        <input matInput id="name" name="name" required formControlName="name">
+                        <div *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.errors?.['required']" class="alert alert-danger">Este campo es requerido</div>
+                        <div *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.errors?.['minlength']" class="alert alert-danger">Nombre debe tener al menos 3 caracteres</div>
                     </mat-form-field>
-                            
+
                     <mat-form-field class="inputs2">
                         <mat-label>Ingresar contraseña</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'">
+                        <input matInput [type]="hide ? 'password' : 'text'" id="password" name="password" required formControlName="password">
+                        <div *ngIf="contactForm.get('password')?.touched && contactForm.get('password')?.errors?.['required']" class="alert alert-danger">La contraseña es requerida</div>
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
                     </mat-form-field>
-        
-                    <button class="button-login" mat-flat-button color="primary" (click)="login()">
+
+                    <button class="button-login" mat-flat-button color="primary" type="submit" [disabled]="contactForm.invalid">
                         Ingresar
                     </button>
                 </form>
