@@ -7,13 +7,13 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  private urlApi = 'http://localhost:3000/users';
+  private urlApi = 'http://localhost:3000/user/create';
 
   constructor(private httpClient: HttpClient) { }
 
 
   public saveData(user: any): Observable<any> {
-    return this.httpClient.post(this.urlApi, user);
+    return this.httpClient.post<any>(this.urlApi, user);
   }
 
 }

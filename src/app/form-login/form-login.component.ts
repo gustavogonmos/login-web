@@ -33,9 +33,8 @@ export class FormLoginComponent {
       this.contactForm.reset();
       this.user = this.user.filter(user => resp.id !== user.id);
       this.user.push(resp);
-      console.log(resp)
     },
-      error => {console.log(error)}
+      error => {console.log("este es el error", error)}
       )
   }
 
